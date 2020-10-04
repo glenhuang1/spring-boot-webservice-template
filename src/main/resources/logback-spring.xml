@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!--		Wildfly Config:Begin		-->
+	<property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) -[%-5level] [%thread] %c - %msg%n" />
+	<!--<property name="LOG_FILE_PATH" value="/u01/wildfly/standalone/log" />-->
+	<property name="LOG_FILE_PATH" value="C:/wildfly-14.0.1.Final/standalone/log" />
+	<property name="APP_NAME" value="spring-boot-webservice-template" />
+
+	<property name="consoleLayoutPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [%t] %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %m%n" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout name="StandardFormat" class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${consoleLayoutPattern}</pattern>
+		</layout>
+	</appender>
+
+	<appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE_PATH}/${APP_NAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE_PATH}/${APP_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<MaxHistory>100</MaxHistory>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${PATTERN}</pattern>
+		</layout>
+	</appender>
+
+    <appender name="ROLLING-FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${APP_NAME}-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/${APP_NAME}-info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="ROLLING-FILE-WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${APP_NAME}-warn.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/${APP_NAME}-warn-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
+
+	<appender name="ROLLING-FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE_PATH}/${APP_NAME}-error.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE_PATH}/${APP_NAME}-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<MaxHistory>100</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${PATTERN}</pattern>
+		</layout>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="ROLLING-FILE" />
+        <appender-ref ref="ROLLING-FILE-INFO" />
+        <appender-ref ref="ROLLING-FILE-WARN" />
+		<appender-ref ref="ROLLING-FILE-ERROR" />
+	</root>
+<!--		Wildfly Config:End		-->
+
+<!--		GAE Config:Begin		-->
+<!--	<appender name="CLOUD" class="com.google.cloud.logging.logback.LoggingAppender">-->
+<!--		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--			<level>INFO</level>-->
+<!--		</filter>-->
+<!--		<log>spring-boot-webservice-template.log</log>-->
+<!--		<flushLevel>WARN</flushLevel>-->
+<!--	</appender>-->
+
+<!--	<root level="info">-->
+<!--		<appender-ref ref="CLOUD" />-->
+<!--	</root>-->
+<!--		GAE Config:End		-->
+
+</configuration>

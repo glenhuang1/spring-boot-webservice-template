@@ -1,0 +1,69 @@
+server:
+  servlet:
+    context-path: /springboot
+
+spring:
+  application:
+    name: springboot
+  mvc:
+    static-path-pattern: /static/**
+    jmx:
+      enabled: false
+    http:
+      encoding:
+        charset: UTF-8
+        enabled: true
+        force: true
+  redis:
+    host: {{host_ip_or_url}}
+    password: {{redis_password}}
+    port: 6379
+    timeout: 2000
+    database: 0
+    lettuce:
+      pool:
+        max-wait: 1500
+        max-active: 16
+        max-idle: 16
+        min-idle: 0
+  data:
+    mongodb:
+      uri: mongodb://{{username}}:{{password}}@{{host_url}}:27017/{{database}}
+      database: {{database}}
+      authentication-database: admin
+  rabbitmq:
+    host: {{host_url}}
+    port: 5672
+    username: {{username}}
+    password: {{password}}
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 1
+        max-concurrency: 1
+        retry:
+          enabled: true
+
+datasource:
+  mysql:
+    jdbc-url: jdbc:mysql://{{host_url}}:3306/test?autoReconnect=true&useSSL=false
+    username: {{username}}
+    password: {{password}}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  oracle:
+    jdbc-url: jdbc:oracle:thin:@{{host_url}}:1521/root
+    username: {{username}}
+    password: {{password}}
+    driver-class-name: oracle.jdbc.OracleDriver
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    #    display-request-duration: true
+    groups-order: DESC
+  version: '@springdoc.version@'
